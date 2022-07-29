@@ -1,6 +1,6 @@
 print 'Please enter a word: '
 word_input = gets.chomp
-until word_input.split(' ').each {|word| word.match?(/^[[:alpha:]]+$/)}
+until word_input.split(' ').all? {|word| word.match?(/\A[a-zA-Z]*\z/)} do
     print 'Please enter a word (alpha only): '
     word_input = gets.chomp
 end
@@ -12,18 +12,16 @@ until number_input.to_i.between?(1, 26) do
     number_input = gets.chomp
 end
 
-
-new_array = []
-
-def cipher(word, factor, arr)
+def cipher(word, factor)
+    arr = []
     split = word.split('')
     split.each do |letter|
         letter == letter.upcase ? letter == ' ' ? arr.push(' ') :
         arr.push((letter.ord + factor > 90 ? ((letter.ord + factor) - 26).chr : letter.ord + factor).chr)
         : arr.push((letter.ord + factor > 122 ? ((letter.ord + factor) - 26).chr : letter.ord + factor).chr)
     end
+    puts arr.join('')
 end
 
-cipher(word_input, number_input.to_i, new_array)
-
-puts new_array.join('')
+cipher(word_input, number_input.to_i)
+ 
